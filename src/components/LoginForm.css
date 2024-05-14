@@ -1,0 +1,30 @@
+.Login-form{
+    padding:5rem;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    gap:2rem;
+    align-items: center;
+}
+#rectangle1
+{
+    background-color:#eac8ca;
+    height:100%;
+    width:100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+#firstlibrary
+{
+    color:#e6c0e9;
+    position: absolute; /* Ustawiamy na pozycję "absolute", aby możemy swobodnie pozycjonować */
+    top: 50px; /* Ustawiamy 50 pikseli od góry (możesz dostosować tę wartość) */
+    left: 50%; /* Ustawiamy połowę szerokości okna przeglądarki */
+    transform: translateX(-50%); /* Przesuwamy tekst o połowę swojej szerokości w lewo, aby wycentrować go */
+    text-align: center; /* Wyśrodkowanie tekstu */
+    font-family:Ingrid Darling;
+    border-style:hidden;
+    outline:none;
+}
+
