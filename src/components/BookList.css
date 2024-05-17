@@ -1,10 +1,10 @@
-.Login-form{
-    padding:5rem;
-    display:flex;
-    flex-direction: column;
+.Book-list {
+    display: flex;
     justify-content: center;
-    gap:2rem;
     align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 5rem;
 }
 #rectangle1 {
     background-color: #D2FDFF;
@@ -14,5 +14,3 @@
     top: 0;
     left: 0;
 }
-
-

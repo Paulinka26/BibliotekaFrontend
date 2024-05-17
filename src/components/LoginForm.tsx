@@ -68,7 +68,7 @@ function LoginForm() {
                       <Button
                           variant="contained"
                           component={Link}
-                          to="/list"
+                          to="/booklist"
                           sx={{ m: 1 }}
                           type="submit"
                           disabled={!(formik.isValid && formik.dirty)}

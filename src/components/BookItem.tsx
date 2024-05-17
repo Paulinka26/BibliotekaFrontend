@@ -15,13 +15,13 @@ interface DataItem {
     Isbn: number;
 }
 
-interface ListItemProps {
+interface BookItemProps {
     item: DataItem;
     isOpen: boolean;
     onClick: () => void;
 }
 
-const ListItem: React.FC<ListItemProps> = ({ item, isOpen, onClick }) => {
+const BookItem: React.FC<BookItemProps> = ({ item, isOpen, onClick }) => {
     return (
         <React.Fragment>
             <ListItemButton onClick={onClick}>
@@ -45,4 +45,4 @@ const ListItem: React.FC<ListItemProps> = ({ item, isOpen, onClick }) => {
     );
 };
 
-export default ListItem;
+export default BookItem;
