@@ -1,7 +1,7 @@
 import React from 'react';
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
-import ListItemComponent from './LoanItem'; // Zmieniony import na LoanItem
+import ListItemComponent from './LoanItem'; 
 
 interface LoanItem {
     loan_id: number;
@@ -13,7 +13,6 @@ interface LoanItem {
 }
 
 interface LoanListProps {
-    // Deklaruj props jeśli są potrzebne
 }
 
 interface LoanListState {
