@@ -4,7 +4,7 @@ import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import ListItemComponent from './BookItem';
 import { Button } from "@mui/material";
-import { Link } from 'react-router-dom'; // Imported Link for routing
+import { Link } from 'react-router-dom'; 
 
 interface DataItem {
     id: number;
@@ -15,7 +15,7 @@ interface DataItem {
 }
 
 interface BookListProps {
-    // Declare props if needed
+
 }
 
 interface BookListState {
