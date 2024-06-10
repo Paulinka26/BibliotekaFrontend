@@ -59,8 +59,8 @@ export default class LoanList extends React.Component<LoanListProps, LoanListSta
                         <ListItemComponent
                             key={item.loan_id}
                             item={item}
-                            isOpen={!!this.state.openItems[item.loan_id]} // Zmieniony klucz na loan_id
-                            onClick={() => this.handleClick(item.loan_id)} // Zmieniony klucz na loan_id
+                            isOpen={!!this.state.openItems[item.loan_id]} 
+                            onClick={() => this.handleClick(item.loan_id)} 
                         />
                     ))}
                 </List>
