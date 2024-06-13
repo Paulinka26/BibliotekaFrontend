@@ -1,0 +1,23 @@
+/* BookList.css */
+:root {
+    --border-color: #C69DD2; /* Kolor ramki */
+    --background-color: #F9F5FF; /* Kolor tła */
+    --button-color: #998fc7; /* Kolor przycisku */
+    --button-text-color: #ffffff; /* Kolor tekstu na przycisku */
+    --list-title-color: #998fc7; /* Kolor tekstu "Lista książek" */
+}
+
+.Book-list {
+    width: 400px; /* Ustal szerokość panelu na 400px */
+    height: 450px;
+    border: 2px solid var(--border-color);
+    background-color: var(--background-color);
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 0 auto;
+}
+
+.List-title {
+    color: var(--list-title-color);
+    margin-bottom: 2rem;
+}

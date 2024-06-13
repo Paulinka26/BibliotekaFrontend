@@ -1,0 +1,45 @@
+:root {
+    --border-color: #C69DD2; /* Kolor ramki */
+    --background-color: #F9F5FF; /* Kolor tła */
+    --button-color: #998fc7; /* Kolor przycisku */
+    --button-text-color: #ffffff; /* Kolor tekstu na przycisku */
+    --login-text-color: #998fc7; /* Kolor tekstu "Dodaj nowego użytkownika" */
+}
+
+.add-user-panel {
+    width: 400px;
+    height: auto;
+    border: 2px solid var(--border-color);
+    background-color: var(--background-color);
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 0 auto;
+}
+
+.Add-user-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Add-user-form input, .Add-user-form select, .form-control-select {
+    width: 80%;
+    margin-bottom: 1rem;
+}
+
+.form-control-select {
+    width: 80%;
+}
+
+.Add-user-form button {
+    width: 75%;
+    margin-top: 2rem;
+    background-color: var(--button-color);
+    color: var(--button-text-color);
+}
+
+h1 {
+    color: var(--login-text-color);
+    text-align: center;
+}
