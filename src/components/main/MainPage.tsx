@@ -14,8 +14,8 @@ export default function LogInButton() {
                 to="/login"
                 sx={{
                     m: 1,
-                    backgroundColor: 'var(--button-color)', // Ustawienie koloru przycisku zgodnie z zmienną CSS
-                    color: '#fff' // Ustawienie koloru tekstu na przycisku na biały
+                    backgroundColor: 'var(--button-color)', 
+                    color: '#fff' 
                 }}
             >
                 Zaloguj
