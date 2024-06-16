@@ -1,28 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import {BookDto} from "../api/dto/book.dto";
+import DeleteIcon from '@mui/icons-material/Delete';
+import { BookDto } from '../api/dto/book.dto';
+import List from "@mui/material/List";
 
 interface BookItemProps {
     item: BookDto;
+    onDelete: (id: number) => void;
 }
 
-const BookItem: React.FC<BookItemProps> = ({ item }) => {
-    const [open, setOpen] = React.useState(false);
+const BookItem: React.FC<BookItemProps> = ({ item, onDelete }) => {
+    const [open, setOpen] = useState(false);
 
     const handleClick = () => {
         setOpen(!open);
     };
 
+    const handleClickDelete = () => {
+        onDelete(item.bookId);
+    };
+
     return (
         <React.Fragment>
-            <div onClick={handleClick} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
-                <ListItemText
-                    primary={item.title}
-                    secondary={`Autor: ${item.author}, Wydawca: ${item.publisher}, Numer ISBN: ${item.isbn}, ID: ${item.bookId}, Rok wydania: ${item.yearOfPublish}, Dostępne kopie: ${item.availableCopies}`}
-                />
-            </div>
+            <ListItemButton onClick={handleClick} sx={{ justifyContent: 'space-between' }}>
+                <ListItemText primary={item.title} />
+                {open ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                    <ListItemButton sx={{ pl: 4 }}>
+                        <ListItemIcon>
+                            <DeleteIcon onClick={handleClickDelete} style={{ cursor: 'pointer' }} />
+                        </ListItemIcon>
+                        <div>
+                            <ListItemText primary={`Autor: ${item.author}`} sx={{ pb: 1, lineHeight: 1.5 }} />
+                            <ListItemText primary={`Wydawca: ${item.publisher}`} sx={{ pb: 1, lineHeight: 1.5 }} />
+                            <ListItemText primary={`ISBN: ${item.isbn}`} sx={{ pb: 1, lineHeight: 1.5 }} />
+                            <ListItemText primary={`Rok wydania: ${item.yearOfPublish}`} sx={{ pb: 1, lineHeight: 1.5 }} />
+                            <ListItemText primary={`Dostępne kopie: ${item.availableCopies}`} sx={{ pb: 1, lineHeight: 1.5 }} />
+                            <ListItemText primary={`ID: ${item.bookId}`} sx={{ pb: 1, lineHeight: 1.5 }} />
+                        </div>
+                    </ListItemButton>
+                </List>
+            </Collapse>
         </React.Fragment>
     );
 };

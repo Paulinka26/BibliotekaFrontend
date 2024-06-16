@@ -1,9 +1,12 @@
+import {BookDto} from "./book.dto";
+import {UserDto} from "./user.dto";
+
 
 export interface LoanDto {
     loanId: number;
-    dueDate: string;
     loanDate: string;
+    dueDate: string;
     returnDate: string | null;
-    bookId: number;
-    userId: number;
+    book: BookDto;
+    user: UserDto;
 }

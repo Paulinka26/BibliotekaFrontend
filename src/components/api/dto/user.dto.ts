@@ -1,5 +1,6 @@
 
 export interface UserDto {
+    userId:number;
     username: string;
     password: string;
     email: string;
@@ -7,9 +8,3 @@ export interface UserDto {
     role: string;
 }
 
-export interface UserResponseDto {
-    username: string;
-    email: string;
-    fullName: string;
-    role: string;
-}

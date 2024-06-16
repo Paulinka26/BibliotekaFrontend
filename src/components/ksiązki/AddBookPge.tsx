@@ -1,25 +1,27 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { Button, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import {BookDto} from "../api/dto/book.dto";
-import {LibraryClient} from "../api/library-clients";
+import { BookDto } from "../api/dto/book.dto";
+import { LibraryClient } from "../api/library-clients";
 
 const AddBookPage: React.FC = () => {
-    const [formData, setFormData] = useState<BookDto>({
+    const initialFormData: BookDto = {
+        bookId: 0,
         title: '',
         author: '',
         publisher: '',
         isbn: '',
-        yearOfPublish: undefined,
-        availableCopies: undefined,
-    });
+        yearOfPublish: 0,
+        availableCopies: 0,
+    };
 
+    const [formData, setFormData] = useState<BookDto>(initialFormData);
     const navigate = useNavigate();
     const libraryClient = new LibraryClient();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setFormData((prev) => ({
+        setFormData(prev => ({
             ...prev,
             [name]: name === 'yearOfPublish' || name === 'availableCopies' ? parseInt(value) : value,
         }));
@@ -34,9 +36,11 @@ const AddBookPage: React.FC = () => {
                 navigate('/booklist'); // Redirect to the book list
             } else {
                 console.error('Error adding book:', response.statusCode);
+
             }
         } catch (error) {
             console.error('Error adding book:', error);
+
         }
     };
 
@@ -52,6 +56,7 @@ const AddBookPage: React.FC = () => {
                     onChange={handleChange}
                     fullWidth
                     margin="normal"
+                    required
                 />
                 <TextField
                     id="author"
@@ -61,6 +66,7 @@ const AddBookPage: React.FC = () => {
                     onChange={handleChange}
                     fullWidth
                     margin="normal"
+                    required
                 />
                 <TextField
                     id="publisher"
@@ -70,6 +76,7 @@ const AddBookPage: React.FC = () => {
                     onChange={handleChange}
                     fullWidth
                     margin="normal"
+                    required
                 />
                 <TextField
                     id="isbn"
@@ -79,26 +86,29 @@ const AddBookPage: React.FC = () => {
                     onChange={handleChange}
                     fullWidth
                     margin="normal"
+                    required
                 />
                 <TextField
                     id="yearOfPublish"
                     name="yearOfPublish"
                     label="Rok wydania"
-                    value={formData.yearOfPublish || ''}
+                    value={formData.yearOfPublish}
                     onChange={handleChange}
                     fullWidth
                     margin="normal"
                     type="number"
+                    required
                 />
                 <TextField
                     id="availableCopies"
                     name="availableCopies"
                     label="Dostępne kopie"
-                    value={formData.availableCopies || ''}
+                    value={formData.availableCopies}
                     onChange={handleChange}
                     fullWidth
                     margin="normal"
                     type="number"
+                    required
                 />
                 <Button
                     type="submit"

@@ -6,6 +6,7 @@ import './AddUserForm.css';
 import {LibraryClient} from "../api/library-clients";
 
 const AddUserForm: React.FC = () => {
+    // @ts-ignore
     const [formData, setFormData] = useState<UserDto>({
         username: '',
         password: '',

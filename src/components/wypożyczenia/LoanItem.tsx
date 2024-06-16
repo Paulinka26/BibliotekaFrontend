@@ -6,17 +6,25 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import List from '@mui/material/List';
+import DeleteIcon from '@mui/icons-material/Delete'; // Ikona kosza
 import { LoanDto } from '../api/dto/loan.dto';
 
 interface LoanItemProps {
     item: LoanDto;
+    onDelete?: (id: number) => Promise<void>;
 }
 
-const LoanItem: React.FC<LoanItemProps> = ({ item }) => {
+const LoanItem: React.FC<LoanItemProps> = ({ item, onDelete }) => {
     const [open, setOpen] = useState(false);
 
     const handleClick = () => {
         setOpen(!open);
+    };
+
+    const handleDelete = async () => {
+        if (onDelete) {
+            await onDelete(item.loanId);
+        }
     };
 
     return (
@@ -28,13 +36,15 @@ const LoanItem: React.FC<LoanItemProps> = ({ item }) => {
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     <ListItemButton sx={{ pl: 4 }}>
-                        <ListItemIcon />
+                        <ListItemIcon>
+                            <DeleteIcon onClick={handleDelete} style={{ cursor: 'pointer' }} /> {}
+                        </ListItemIcon>
                         <div>
                             <ListItemText primary={`Data wypożyczenia: ${item.loanDate}`} sx={{ pb: 1, lineHeight: 1.5 }} />
                             <ListItemText primary={`Planowana data zwrotu: ${item.dueDate}`} sx={{ pb: 1, lineHeight: 1.5 }} />
                             <ListItemText primary={`Data zwrotu: ${item.returnDate || 'N/A'}`} sx={{ pb: 1, lineHeight: 1.5 }} />
-                            <ListItemText primary={`ID książki: ${item.bookId}`} sx={{ pb: 1, lineHeight: 1.5 }} />
-                            <ListItemText primary={`ID użytkownika: ${item.userId}`} sx={{ pb: 1, lineHeight: 1.5 }} />
+                            <ListItemText primary={`ID książki: ${item.book.bookId}`} sx={{ pb: 1, lineHeight: 1.5 }} />
+                            <ListItemText primary={`ID użytkownika: ${item.user.userId}`} sx={{ pb: 1, lineHeight: 1.5 }} />
                         </div>
                     </ListItemButton>
                 </List>
