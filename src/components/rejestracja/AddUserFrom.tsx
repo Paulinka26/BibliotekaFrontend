@@ -32,7 +32,7 @@ const AddUserForm: React.FC = () => {
             const response = await libraryClient.addUser(formData);
             if (response.success) {
                 console.log('User added successfully:', response.data);
-                navigate('/login'); // Redirect to the login page
+                navigate('/selection');
             } else {
                 console.error('Error adding user:', response.statusCode);
             }

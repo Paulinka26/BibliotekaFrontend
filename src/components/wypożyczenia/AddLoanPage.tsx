@@ -1,23 +1,68 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { Button, TextField, Snackbar } from '@mui/material';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { Button, TextField, Snackbar, List, ListItem, ListItemText } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { BookDto } from "../api/dto/book.dto";
-import { LibraryClient } from "../api/library-clients";
+import { LoanRequestDto } from "../api/dto/loanRequest.dto";
+import {BookDto} from "../api/dto/book.dto";
+import {UserDto} from "../api/dto/user.dto";
+import {LibraryClient} from "../api/library-clients";
 
-const AddBookPage: React.FC = () => {
-    const [formData, setFormData] = useState<BookDto>({
-        bookId: 0, // Może być wartość domyślna, jeśli nie jest używana
-        isbn: '',
-        title: '',
-        author: '',
-        publisher: '',
-        yearOfPublish: 0, // Może być wartość domyślna, jeśli nie jest używana
-        availableCopies: 0, // Może być wartość domyślna, jeśli nie jest używana
+
+const getDefaultDates = () => {
+    const today = new Date();
+    const loanDate = today.toISOString().split('T')[0];
+    const dueDate = new Date(today.setMonth(today.getMonth() + 1)).toISOString().split('T')[0];
+    return { loanDate, dueDate };
+};
+
+const AddLoanPage: React.FC = () => {
+    const { loanDate, dueDate } = getDefaultDates();
+
+    const [formData, setFormData] = useState<LoanRequestDto>({
+        loanDate: loanDate,
+        dueDate: dueDate,
+        returnDate: null,
+        bookId: 0,
+        userId: 0,
     });
 
+    const [books, setBooks] = useState<BookDto[]>([]);
+    const [users, setUsers] = useState<UserDto[]>([]);
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
     const libraryClient = new LibraryClient();
+
+    useEffect(() => {
+        const fetchBooks = async () => {
+            try {
+                const response = await libraryClient.getBooks();
+                if (response.success) {
+                    setBooks(response.data || []);
+                } else {
+                    setError('Wystąpił błąd podczas pobierania książek.');
+                }
+            } catch (error) {
+                console.error('Error fetching books:', error);
+                setError('Wystąpił błąd podczas pobierania książek.');
+            }
+        };
+
+        const fetchUsers = async () => {
+            try {
+                const response = await libraryClient.getUsers();
+                if (response.success) {
+                    setUsers(response.data || []);
+                } else {
+                    setError('Wystąpił błąd podczas pobierania użytkowników.');
+                }
+            } catch (error) {
+                console.error('Error fetching users:', error);
+                setError('Wystąpił błąd podczas pobierania użytkowników.');
+            }
+        };
+
+        fetchBooks();
+        fetchUsers();
+    }, []);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -31,24 +76,24 @@ const AddBookPage: React.FC = () => {
         e.preventDefault();
 
         try {
-            const response = await libraryClient.addBook({
-                isbn: formData.isbn,
-                title: formData.title,
-                author: formData.author,
-                publisher: formData.publisher,
-                yearOfPublish: formData.yearOfPublish,
-                availableCopies: formData.availableCopies,
+            const response = await libraryClient.addLoan({
+                loanDate: formData.loanDate,
+                dueDate: formData.dueDate,
+                returnDate: formData.returnDate,
+                bookId: formData.bookId,
+                userId: formData.userId,
             });
+
             if (response.success) {
-                console.log('Book added successfully:', response.data);
-                navigate('/booklist'); // Redirect to the book list
+                console.log('Loan added successfully:', response.data);
+                navigate('/loanlist'); // Redirect to the loan list
             } else {
-                console.error('Error adding book:', response.statusCode);
-                setError('Nie udało się dodać książki. Sprawdź dane i spróbuj ponownie.');
+                console.error('Error adding loan:', response.statusCode);
+                setError('Nie udało się dodać wypożyczenia. Sprawdź dane i spróbuj ponownie.');
             }
         } catch (error) {
-            console.error('Error adding book:', error);
-            setError('Wystąpił błąd podczas dodawania książki.');
+            console.error('Error adding loan:', error);
+            setError('Wystąpił błąd podczas dodawania wypożyczenia.');
         }
     };
 
@@ -58,74 +103,87 @@ const AddBookPage: React.FC = () => {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <h1>Dodaj książkę</h1>
-            <form onSubmit={handleSubmit} style={{ width: '100%', maxWidth: '400px' }}>
+            <h1>Dodaj wypożyczenie</h1>
+            <form onSubmit={handleSubmit} style={{ width: '100%', maxWidth: '600px' }}>
                 <TextField
-                    id="isbn"
-                    name="isbn"
-                    label="ISBN"
-                    type="text"
-                    value={formData.isbn}
+                    id="loanDate"
+                    name="loanDate"
+                    label="Data wypożyczenia"
+                    type="date"
+                    value={formData.loanDate}
                     onChange={handleChange}
                     fullWidth
                     margin="normal"
+                    InputLabelProps={{ shrink: true }}
                 />
                 <TextField
-                    id="title"
-                    name="title"
-                    label="Tytuł"
-                    type="text"
-                    value={formData.title}
+                    id="dueDate"
+                    name="dueDate"
+                    label="Planowana data zwrotu"
+                    type="date"
+                    value={formData.dueDate}
                     onChange={handleChange}
                     fullWidth
                     margin="normal"
+                    InputLabelProps={{ shrink: true }}
                 />
                 <TextField
-                    id="author"
-                    name="author"
-                    label="Autor"
-                    type="text"
-                    value={formData.author}
+                    id="returnDate"
+                    name="returnDate"
+                    label="Data zwrotu"
+                    type="date"
+                    value={formData.returnDate || ''}
                     onChange={handleChange}
                     fullWidth
                     margin="normal"
+                    InputLabelProps={{ shrink: true }}
                 />
                 <TextField
-                    id="publisher"
-                    name="publisher"
-                    label="Wydawca"
-                    type="text"
-                    value={formData.publisher}
+                    id="bookId"
+                    name="bookId"
+                    select
+                    label="Wybierz książkę"
+                    value={formData.bookId}
                     onChange={handleChange}
                     fullWidth
                     margin="normal"
-                />
+                    SelectProps={{
+                        native: true,
+                    }}
+                >
+                    <option value={0}>Wybierz książkę...</option>
+                    {books.map(book => (
+                        <option key={book.bookId} value={book.bookId}>
+                            {`${book.bookId} - ${book.title}`}
+                        </option>
+                    ))}
+                </TextField>
                 <TextField
-                    id="yearOfPublish"
-                    name="yearOfPublish"
-                    label="Rok wydania"
-                    type="number"
-                    value={formData.yearOfPublish}
+                    id="userId"
+                    name="userId"
+                    select
+                    label="Wybierz użytkownika"
+                    value={formData.userId}
                     onChange={handleChange}
                     fullWidth
                     margin="normal"
-                />
-                <TextField
-                    id="availableCopies"
-                    name="availableCopies"
-                    label="Dostępne kopie"
-                    type="number"
-                    value={formData.availableCopies}
-                    onChange={handleChange}
-                    fullWidth
-                    margin="normal"
-                />
+                    SelectProps={{
+                        native: true,
+                    }}
+                >
+                    <option value={0}>Wybierz użytkownika...</option>
+                    {users.map(user => (
+                        <option key={user.userId} value={user.userId}>
+                            {`${user.userId} - ${user.username}`}
+                        </option>
+                    ))}
+                </TextField>
                 <Button
                     type="submit"
                     variant="contained"
                     sx={{ backgroundColor: '#998FC7', color: '#FFFFFF', width: '100%', mt: 2 }}
                 >
-                    Dodaj książkę
+                    Dodaj wypożyczenie
                 </Button>
             </form>
             <Snackbar
@@ -139,4 +197,4 @@ const AddBookPage: React.FC = () => {
     );
 };
 
-export default AddBookPage;
+export default AddLoanPage;

@@ -10,6 +10,9 @@ import AddBookPage from "./components/ksiązki/AddBookPge";
 import AddLoanPage from "./components/wypożyczenia/AddLoanPage";
 import Selection from "./components/main/Selection";
 import AddUserForm from "./components/rejestracja/AddUserFrom";
+import EditBook from "./components/ksiązki/EditBook";
+import EditLoan from "./components/wypożyczenia/EditLoan";
+import UserList from "./components/rejestracja/UserList";
 
 function App() {
     return (
@@ -25,6 +28,10 @@ function App() {
                     <Route path="/addloan" element={<AddLoanPage />} />
                     <Route path="/selection" element={<Selection />} />
                     <Route path="/adduser" element={<AddUserForm />} />
+                    <Route path="/editbook/:id" element={<EditBook/>} />
+                    <Route path="/editloan/:id" element={<EditLoan/>} />
+                    <Route path="/userList" element={<UserList />} />
+
                 </Routes>
             </ApiProvider>
         </BrowserRouter>

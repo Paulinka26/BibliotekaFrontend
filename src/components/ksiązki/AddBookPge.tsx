@@ -17,6 +17,7 @@ const AddBookPage: React.FC = () => {
 
     const [formData, setFormData] = useState<BookDto>(initialFormData);
     const navigate = useNavigate();
+    const [error, setError] = useState<string | null>(null);
     const libraryClient = new LibraryClient();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,14 +34,18 @@ const AddBookPage: React.FC = () => {
             const response = await libraryClient.addBook(formData);
             if (response.success) {
                 console.log('Book added successfully:', response.data);
-                navigate('/booklist'); // Redirect to the book list
+                navigate('/booklist');
             } else {
-                console.error('Error adding book:', response.statusCode);
-
+                if (response.statusCode === 403) {
+                    setError('Nie masz uprawnień do dodawania książek.');
+                } else {
+                    setError('Wystąpił błąd podczas dodawania książki.');
+                    console.error('Error adding book:', response.statusCode);
+                }
             }
         } catch (error) {
+            setError('Wystąpił błąd podczas dodawania książki.');
             console.error('Error adding book:', error);
-
         }
     };
 

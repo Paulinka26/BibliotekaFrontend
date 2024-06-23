@@ -1,9 +1,9 @@
-export class LoginDto {
-    login: string | undefined;
-    password: string | undefined;
+
+export interface LoginDto {
+    login: string;
+    password: string;
 }
 
-export class LoginResponseDto {
-    token: string | undefined;
-
+export interface LoginResponseDto {
+    token: string;
 }

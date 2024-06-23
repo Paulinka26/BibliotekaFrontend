@@ -74,7 +74,6 @@ function LoginForm() {
                         </form>
                     )}
                 </Formik>
-                <Link to="/adduser" className="add-user-link">Dodaj użytkownika</Link>
             </div>
         </div>
     );

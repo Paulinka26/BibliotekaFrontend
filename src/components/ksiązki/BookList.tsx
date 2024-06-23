@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
-import { Button, Typography } from '@mui/material';
+import { Button, Typography, Snackbar } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { BookDto } from '../api/dto/book.dto';
 import BookItem from './BookItem';
@@ -10,6 +10,7 @@ import './BookList.css';
 
 const BookList: React.FC = () => {
     const [books, setBooks] = useState<BookDto[]>([]);
+    const [error, setError] = useState<string | null>(null); // State for error message
     const client = new LibraryClient();
 
     useEffect(() => {
@@ -36,10 +37,20 @@ const BookList: React.FC = () => {
                 setBooks((prevBooks) => prevBooks.filter((book) => book.bookId !== id));
             } else {
                 console.error('Error deleting book:', response.statusCode);
+                if (response.statusCode === 409) {
+                    setError('Nie można usunąć książki, ponieważ jest wypożyczona.');
+                } else {
+                    setError('Wystąpił błąd podczas usuwania książki.');
+                }
             }
         } catch (error) {
             console.error('Error deleting book:', error);
+            setError('Wystąpił błąd podczas usuwania książki.');
         }
+    };
+
+    const handleCloseSnackbar = () => {
+        setError(null);
     };
 
     return (
@@ -62,6 +73,13 @@ const BookList: React.FC = () => {
                     Dodaj książkę
                 </Button>
             </Box>
+            <Snackbar
+                open={!!error}
+                autoHideDuration={6000}
+                onClose={handleCloseSnackbar}
+                message={error}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            />
         </Box>
     );
 };

@@ -39,6 +39,22 @@ const Selection = () => {
                         Lista książek
                     </Button>
                 </Grid>
+                <Grid item xs={12} sm={6}>
+                    <Button
+                        variant="contained"
+                        fullWidth
+                        component={Link}
+                        to="/userlist"
+                        sx={{
+                            m: 1,
+                            backgroundColor: 'var(--button-color)',
+                            color: '#fff'
+                        }}
+                    >
+                        Lista użytkowników
+                    </Button>
+                </Grid>
+
             </Grid>
         </Container>
     );
