@@ -86,7 +86,7 @@ const AddLoanPage: React.FC = () => {
 
             if (response.success) {
                 console.log('Loan added successfully:', response.data);
-                navigate('/loanlist'); // Redirect to the loan list
+                navigate('/loanlist');
             } else {
                 console.error('Error adding loan:', response.statusCode);
                 setError('Nie udało się dodać wypożyczenia. Sprawdź dane i spróbuj ponownie.');

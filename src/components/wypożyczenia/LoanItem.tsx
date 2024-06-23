@@ -7,8 +7,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import List from '@mui/material/List';
 import DeleteIcon from '@mui/icons-material/Delete'; // Ikona kosza
-import EditIcon from '@mui/icons-material/Edit'; // Ikona edycji
-import { LoanDto } from '../api/dto/loan.dto';
+import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
 import { IconButton } from '@mui/material';
 

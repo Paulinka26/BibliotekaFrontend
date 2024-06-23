@@ -1,4 +1,4 @@
-/* LoginForm.css */
+
 :root {
     --border-color: #C69DD2; /* Zostawiamy istniejący kolor ramki */
     --background-color: #F9F5FF; /* Zostawiamy istniejący kolor tła */
@@ -8,7 +8,7 @@
 }
 
 .login-panel {
-    width: 400px; /* Ustal szerokość panelu na 400px */
+    width: 400px;
     height: 300px;
     border: 2px solid var(--border-color);
     background-color: var(--background-color);
@@ -19,9 +19,9 @@
 .add-user-link {
     display: block;
     text-align: center;
-    margin-top: 20px; /* Odstęp od przycisku Zaloguj się */
-    color: #998FC7; /* Kolor fioletowy */
-    text-decoration: none; /* Usunięcie podkreślenia */
+    margin-top: 20px;
+    color: #998FC7;
+    text-decoration: none;
 }
 
 .Login-form {
@@ -31,20 +31,19 @@
     align-items: center;
 }
 
-/* Extra styling for form elements */
 .Login-form input {
-    width: 80%; /* Rozszerz pola input na 80% szerokości panelu */
-    margin-bottom: 1rem; /* Dodaj odstęp na dole każdego pola input */
+    width: 80%;
+    margin-bottom: 1rem;
 }
 
 .Login-form button {
-    width: 75%; /* Rozszerz przycisk na 80% szerokości panelu */
-    margin-top: 4rem; /* Dodaj odstęp na górze przycisku */
-    background-color: var(--button-color); /* Ustaw kolor tła przycisku */
-    color: var(--button-text-color); /* Ustaw kolor tekstu na przycisku */
+    width: 75%;
+    margin-top: 4rem;
+    background-color: var(--button-color);
+    color: var(--button-text-color);
 }
 
 h1 {
-    color: var(--login-text-color); /* Ustaw kolor tekstu "Zaloguj się do biblioteki" */
-    text-align: center; /* Wyśrodkuj tekst */
+    color: var(--login-text-color);
+    text-align: center;
 }

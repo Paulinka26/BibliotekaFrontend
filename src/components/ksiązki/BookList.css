@@ -8,7 +8,7 @@
 }
 
 .Book-list {
-    width: 400px; /* Ustal szerokość panelu na 400px */
+    width: 400px;
     height: 450px;
     border: 2px solid var(--border-color);
     background-color: var(--background-color);
